@@ -1,9 +1,7 @@
 version: "3.8"
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
+  api:
+    image: openai-test-dev
     command: >
       sh -c "python manage.py makemigrations &&
              python manage.py migrate &&

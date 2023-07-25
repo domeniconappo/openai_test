@@ -1,36 +1,47 @@
-PROJECT_NAME := openai_test
+PROJECT_NAME := openai-test
 DOCKER_COMPOSE := docker-compose -f docker-compose.yml
-MANAGE := $(DOCKER_COMPOSE) run --rm web python manage.py
+RUN := $(DOCKER_COMPOSE) run --rm api poetry run
+MANAGE := $(RUN) python manage.py
+
 
 build:
-	docker build -t $(PROJECT_NAME) --target production
+	docker build --tag $(PROJECT_NAME) --target production ./
 
 # Development
 build-dev:
-	docker build -t $(PROJECT_NAME)-dev --target development
+	docker build --no-cache --tag $(PROJECT_NAME)-dev --target development ./
+
+shell:
+	${DOCKER_COMPOSE} run --rm api bash
+	$(DOCKER_COMPOSE) stop
 
 up:
-	$(DOCKER_COMPOSE_DEV) up -d
+	$(DOCKER_COMPOSE) up -d
 
 down:
-	$(DOCKER_COMPOSE_DEV) down
+	$(DOCKER_COMPOSE) down
 
 restart:
-	$(DOCKER_COMPOSE_DEV) restart
+	$(DOCKER_COMPOSE) restart
+
 
 # Django Commands
 makemigrations:
 	$(MANAGE) makemigrations
+	$(DOCKER_COMPOSE) stop
 
 migrate:
 	$(MANAGE) migrate
+	$(DOCKER_COMPOSE) stop
 
 createsuperuser:
 	$(MANAGE) createsuperuser
+	$(DOCKER_COMPOSE) stop
 
 # Testing
 test:
-	$(MANAGE) pytest
+	$(RUN) pytest
+	$(DOCKER_COMPOSE) stop
 
 # Cleaning
 clean-pyc:
@@ -44,14 +55,14 @@ clean-build:
 clean: clean-pyc clean-build
 
 # Formatting and Linting
-black:
-	$(MANAGE) black .
-
-isort:
-	$(MANAGE) isort .
+format:
+	$(RUN) isort .
+	$(RUN) black .
+	$(DOCKER_COMPOSE) stop
 
 lint:
-	$(MANAGE) flake8 .
+	$(RUN) flake8 .
+	$(DOCKER_COMPOSE) stop
 
 format: black isort
 
