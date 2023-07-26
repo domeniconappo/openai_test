@@ -3,8 +3,8 @@ import os
 import sys
 
 if __name__ == "__main__":
-    # Set the DJANGO_SETTINGS_MODULE environment variable to point to your settings.py file.
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openai_test.settings")
+    sys.path.append("./src")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openai_ms.settings")
 
     # Load Django settings
     try:

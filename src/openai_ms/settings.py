@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "api",
+    "drf_yasg",
+    "openai_ms.api",
 ]
 
 MIDDLEWARE = [
@@ -30,7 +31,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "openai_test.urls"
+ROOT_URLCONF = "openai_ms.urls"
 
 TEMPLATES = [
     {
@@ -48,50 +49,37 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "openai_test.wsgi.application"
+WSGI_APPLICATION = "openai_ms.wsgi.application"
 
 # Database
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get(
-            "DB_NAME", "mydb"
-        ),  # Replace 'mydb' with your database name
-        "USER": os.environ.get(
-            "DB_USER", "mydbuser"
-        ),  # Replace 'mydbuser' with your database user
-        "PASSWORD": os.environ.get(
-            "DB_PASSWORD", "mypassword"
-        ),  # Replace 'mypassword' with your database password
-        "HOST": os.environ.get(
-            "DB_HOST", "db"
-        ),  # Replace 'db' with the name of your PostgreSQL service in Docker Compose
-        "PORT": os.environ.get(
-            "DB_PORT", "5432"
-        ),  # Replace '5432' with the port number your PostgreSQL service uses
+        "NAME": os.environ.get("DB_NAME", "mydb"),
+        "USER": os.environ.get("DB_USER", "mydbuser"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "mypassword"),
+        "HOST": os.environ.get("DB_HOST", "db"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
 
 # Rest Framework settings
 REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
-        "rest_framework.authentication.BasicAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    "DEFAULT_AUTHENTICATION_CLASSES": [],
+    "DEFAULT_PERMISSION_CLASSES": [],
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
 # Internationalization
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
-USE_L10N = True
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# # Static files (CSS, JavaScript, Images)
+# STATIC_URL = "/static/"
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-# Media files (uploaded by users)
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# # Media files (uploaded by users)
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")

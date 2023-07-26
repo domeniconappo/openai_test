@@ -9,7 +9,8 @@ python = "^3.10"
 django = "^4.2"
 djangorestframework = "^3.14"
 psycopg2-binary = "^2.9"
-
+openai = "^0.27"
+drf-yasg = "^1.21"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.4"
@@ -18,6 +19,10 @@ pytest-cov = "^3.0"
 flake8 = "^6.0"
 black = "^23.7"
 isort = "^5.12"
+mypy = "^1.4"
+django-stubs = "^4.2.3"
+djangorestframework-stubs = "^3.14"
+drf-yasg-stubs = "^0.1.4"
 
 [tool.poetry.extras]
 dev = ["ipython"]
@@ -27,7 +32,22 @@ requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
-# Optional: add any additional pytest configuration here, if needed
-# For example:
-# DJANGO_SETTINGS_MODULE = "my_drf_app.settings"
-# addopts = "--cov=my_drf_app --cov-report=html"
+python_files = "tests.py test_*.py *_tests.py"
+DJANGO_SETTINGS_MODULE = "openai_ms.settings"
+pythonpath = ["src", "tests"]  # adds /src and /tests directories to the pythonpath
+addopts = "--cov=openai_ms"
+
+[tool.mypy]
+mypy_path = ["src", "tests"]
+python_version = "3.10"
+disallow_untyped_defs = true
+show_error_codes = true
+no_implicit_optional = true
+warn_return_any = true
+warn_unused_ignores = true
+plugins = ["mypy_django_plugin.main"]
+
+strict_optional = true
+
+[tool.django-stubs]
+django_settings_module = "openai_ms.settings"

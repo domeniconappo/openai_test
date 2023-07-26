@@ -1,15 +1,16 @@
 PROJECT_NAME := openai-test
 DOCKER_COMPOSE := docker-compose -f docker-compose.yml
 RUN := $(DOCKER_COMPOSE) run --rm api poetry run
+RUN_NODEPS := $(DOCKER_COMPOSE) run --no-deps --rm api poetry run
 MANAGE := $(RUN) python manage.py
 
 
 build:
-	docker build --tag $(PROJECT_NAME) --target production ./
+	docker build --progress=plain --tag $(PROJECT_NAME) --target production ./
 
 # Development
 build-dev:
-	docker build --no-cache --tag $(PROJECT_NAME)-dev --target development ./
+	docker build --no-cache --progress=plain --tag $(PROJECT_NAME)-dev --target development ./
 
 shell:
 	${DOCKER_COMPOSE} run --rm api bash
@@ -47,21 +48,15 @@ test:
 clean-pyc:
 	find . -name "*.pyc" -exec rm -f {} +
 
-clean-build:
-	rm -rf build/
-	rm -rf dist/
-	rm -rf *.egg-info
-
-clean: clean-pyc clean-build
 
 # Formatting and Linting
 format:
-	$(RUN) isort .
-	$(RUN) black .
+	$(RUN_NODEPS) isort .
+	$(RUN_NODEPS) black .
 	$(DOCKER_COMPOSE) stop
 
-lint:
-	$(RUN) flake8 .
+type-check:
+	$(RUN_NODEPS) mypy .
 	$(DOCKER_COMPOSE) stop
 
 format: black isort
