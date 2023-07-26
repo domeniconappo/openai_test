@@ -25,6 +25,8 @@ down:
 restart:
 	$(DOCKER_COMPOSE) restart
 
+reset:
+	$(DOCKER_COMPOSE) down -v
 
 # Django Commands
 makemigrations:
@@ -59,6 +61,4 @@ type-check:
 	$(RUN_NODEPS) mypy .
 	$(DOCKER_COMPOSE) stop
 
-format: black isort
-
-.PHONY: build-dev up down restart makemigrations migrate createsuperuser test clean-pyc clean-build clean black isort lint format
+.PHONY: build build-dev up down reset restart makemigrations migrate createsuperuser test clean-pyc clean-build clean black isort type-check format
