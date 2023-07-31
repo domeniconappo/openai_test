@@ -1,5 +1,8 @@
 # openai microservice test
 
+
+## Set up
+
 Copy the .env.template to .env
 Edit the variables and set your api key.
 
@@ -9,10 +12,18 @@ Apply first migration
 make migrate
 ```
 
-Then to start the service:
+## Start the service
+
+To start the service just run:
 
 ```bash
 make up
 ```
 
 Docs are at http://localhost:8000/swagger/
+
+You can run tests with:
+
+```bash
+make test
+```

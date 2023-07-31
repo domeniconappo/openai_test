@@ -62,6 +62,7 @@ DATABASES = {
         "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 # Rest Framework settings
 REST_FRAMEWORK = {
@@ -76,10 +77,5 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# # Static files (CSS, JavaScript, Images)
-# STATIC_URL = "/static/"
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-
-# # Media files (uploaded by users)
-# MEDIA_URL = "/media/"
-# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# # Static files (CSS, JavaScript, Images)  needed for swagger docs
+STATIC_URL = "/static/"

@@ -12,12 +12,16 @@ schema_view = get_schema_view(
         description="OpenAI MS test",
     ),
     public=True,
-    permission_classes=[permissions.AllowAny,],
+    permission_classes=[
+        permissions.AllowAny,
+    ],
 )
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("openai_ms.api.urls")),
+    
+    # Openapi docs url config
     path(
         "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
     ),

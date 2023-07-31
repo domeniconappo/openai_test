@@ -8,7 +8,7 @@ pytestmark = pytest.mark.django_db
 
 @pytest.fixture
 def create_prompt_data() -> dict:
-    return {"text": "Test Prompt Text"}
+    return {"text": "Test Prompt Text", "response": "Response Test"}
 
 
 @pytest.fixture
