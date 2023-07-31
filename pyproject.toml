@@ -23,7 +23,7 @@ mypy = "^1.4"
 django-stubs = "^4.2.3"
 djangorestframework-stubs = "^3.14"
 drf-yasg-stubs = "^0.1.4"
-ipdb = "^0.13"
+ipdb = "^0.13.13"
 
 [tool.poetry.extras]
 dev = ["ipython"]

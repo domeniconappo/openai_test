@@ -6,6 +6,12 @@
 Copy the .env.template to .env
 Edit the variables and set your api key.
 
+Build the image
+
+```bash
+make build-dev
+```
+
 Apply first migration
 
 ```bash
